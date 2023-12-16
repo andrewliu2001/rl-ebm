@@ -11,10 +11,10 @@ def evaluate_molecule(smiles, perform_conformer_analysis=False):
     # Convert SMILES to RDKit molecule
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
-        return -1  # Invalid molecule
+        return -2  # Invalid molecule
 
     # 1. Chemical Validity Check
-    reward += 1
+    reward += 0
 
     # 2. Stereochemistry Check
     if Chem.FindMolChiralCenters(mol, includeUnassigned=True):
@@ -53,5 +53,9 @@ def evaluate_molecule(smiles, perform_conformer_analysis=False):
 
 if __name__ == '__main__':
     # Test the function
-    reward = evaluate_molecule('CCO')
-    print("Reward:", reward)
+    test_molecules = ['[H]B([Be][Li])[Be][Li][BeH]', '[H]N1O[Li]12([H])(B)[Li]1[Li]C12', '[H]B(BN)C(N)[Li]([BeH])(B)N', '[H][Be][Li]=[Li]12([BeH])([BeH])(B)(BC([H])([H])B)[Be]B1C2', '[H][Li]12=[Li]([Be]1)O2', '[H][Li]=[Li]([H])([H])N[Li]([H])#[Li](B)O', '[H]B1[Be]N=[Li]23([H])(=[Li])#[Li]4([H])(C[Li](BO)(=B2)C4(O[BeH])C3([BeH])[BeH])N1', '[H]B([H])[BeH]', '[H]B[Be]B[Li]([H])B1CN[Li]2([H])([Li](O)O)([Be]B2)[Be][Li]1(B)(C)(O)O']
+    
+    for smiles in test_molecules:
+        print(evaluate_molecule(smiles))
+    #reward = evaluate_molecule('[H][Li]=[Li]([H])([H])N[Li]([H])#[Li](B)O')
+    #print("Reward:", reward)
